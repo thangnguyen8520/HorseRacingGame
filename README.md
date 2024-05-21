@@ -1,2 +1,2 @@
 # HorseRacingGame
-AndroiStudio
+AndroidStudio
