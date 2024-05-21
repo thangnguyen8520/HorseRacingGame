@@ -1,0 +1,12 @@
+- Tạo 1 con game nhỏ đua xe, sử dụng seekbar để làm layout chính 
+	+ Trên giao diện phải có ít nhất 3 con xe và 3 đường đua
+	+ Có chỗ cho đặt cược(cho phép đặt cược cả 3 con xe)
+	+ Có chỗ thể hiện thông tin số tiền mình đang có
+	+ Dùng lệnh random để đua
+	+ Có nút Start, Reset
+- Tạo thêm 1 màn hình Đăng nhập
+- Ràng buộc kiểm tra tổng tiền, không được đặt cược quá số tiền hiện đang có
+- Khi chiến thắng có thêm 1 màn hình chiến thắng 
+- Có âm thanh, hình ảnh
+- Có hướng dẫn sử dụng 
+- Làm theo nhóm, hạn nộp 24/5
