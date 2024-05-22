@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout raceTrackLayout;
     private boolean isRaceRunning = false; // To track if the race is running
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             balance = intent.getIntExtra("balance", 1000); // Default balance is 1000
             tvBalance.setText("Balance: $" + balance);
         }
+
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,6 +131,9 @@ public class MainActivity extends AppCompatActivity {
         horseImage2.setTranslationX(0);
         horseImage3.setTranslationX(0);
 
+        isRaceRunning = true;
+        setFieldsAndButtonsEnabled(false);
+
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -150,13 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }, 100);
-        isRaceRunning = true;
-        etBet1.setEnabled(false);
-        etBet2.setEnabled(false);
-        etBet3.setEnabled(false);
-        btnStart.setEnabled(false);
 
-        // Example race logic using handler and runnable to move the horses
         handler.post(raceRunnable);
     }
 
@@ -190,6 +187,9 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("balance", balance);
             startActivity(intent);
         }
+
+        isRaceRunning = false;
+        setFieldsAndButtonsEnabled(true);
     }
 
     private void resetRace() {
@@ -205,16 +205,23 @@ public class MainActivity extends AppCompatActivity {
         etBet3.setText("0");
 
         // Re-enable the bet fields and start button
-        etBet1.setEnabled(true);
-        etBet2.setEnabled(true);
-        etBet3.setEnabled(true);
-        btnStart.setEnabled(true);
+        setFieldsAndButtonsEnabled(true);
 
         // Reset horse positions
         horseImage1.setX(0);
         horseImage2.setX(0);
         horseImage3.setX(0);
     }
+
+    private void setFieldsAndButtonsEnabled(boolean enabled) {
+        etBet1.setEnabled(enabled);
+        etBet2.setEnabled(enabled);
+        etBet3.setEnabled(enabled);
+        btnStart.setEnabled(enabled);
+        btnReset.setEnabled(enabled);
+        btnInstruction.setEnabled(enabled);
+    }
+
     private Runnable raceRunnable = new Runnable() {
         @Override
         public void run() {
@@ -228,10 +235,7 @@ public class MainActivity extends AppCompatActivity {
             // Check if any horse has won
             if (checkIfHorseWon(horseImage1) || checkIfHorseWon(horseImage2) || checkIfHorseWon(horseImage3)) {
                 isRaceRunning = false;
-                btnStart.setEnabled(true);
-                etBet1.setEnabled(true);
-                etBet2.setEnabled(true);
-                etBet3.setEnabled(true);
+                setFieldsAndButtonsEnabled(true);
             } else {
                 handler.postDelayed(this, 100); // Continue running the race
             }
