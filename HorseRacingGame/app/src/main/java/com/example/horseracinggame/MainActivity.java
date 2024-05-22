@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,13 +21,15 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView horseImage1, horseImage2, horseImage3;
     private EditText etBet1, etBet2, etBet3;
-    private Button btnStart, btnReset;
+    private Button btnStart, btnReset, btnInstruction;
     private TextView tvBalance;
     private int balance = 1000;
     private Random random;
     private Handler handler;
     private MediaPlayer mediaPlayer;
     private RelativeLayout raceTrackLayout;
+    private boolean isRaceRunning = false; // To track if the race is running
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,18 +44,37 @@ public class MainActivity extends AppCompatActivity {
         etBet3 = findViewById(R.id.et_bet3);
         btnStart = findViewById(R.id.btn_start);
         btnReset = findViewById(R.id.btn_reset);
+        btnInstruction = findViewById(R.id.btn_instruction);
         tvBalance = findViewById(R.id.tv_balance);
         raceTrackLayout = findViewById(R.id.raceTrackLayout);
         random = new Random();
         handler = new Handler();
         mediaPlayer = MediaPlayer.create(this, R.raw.race_sound);
 
-        tvBalance.setText("Balance: $" + balance);
+        // Set default values of the bet EditTexts to 0
+        etBet1.setText("0");
+        etBet2.setText("0");
+        etBet3.setText("0");
 
+        Log.d("MainActivity", "onCreate: horseImage1 = " + horseImage1);
+        Log.d("MainActivity", "onCreate: horseImage2 = " + horseImage2);
+        Log.d("MainActivity", "onCreate: horseImage3 = " + horseImage3);
+
+        if (horseImage1 == null || horseImage2 == null || horseImage3 == null) {
+            Log.e("MainActivity", "One or more ImageViews are null. Check your XML layout.");
+        }
+
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("balance")) {
+            balance = intent.getIntExtra("balance", 1000); // Default balance is 1000
+            tvBalance.setText("Balance: $" + balance);
+        }
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startRace();
+                if (!isRaceRunning) {
+                    startRace();
+                }
             }
         });
 
@@ -60,6 +82,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 resetRace();
+            }
+        });
+
+        btnInstruction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, InstructionActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -120,6 +150,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }, 100);
+        isRaceRunning = true;
+        etBet1.setEnabled(false);
+        etBet2.setEnabled(false);
+        etBet3.setEnabled(false);
+        btnStart.setEnabled(false);
+
+        // Example race logic using handler and runnable to move the horses
+        handler.post(raceRunnable);
     }
 
     private void determineWinner(int progress1, int progress2, int progress3, int bet1, int bet2, int bet3) {
@@ -155,11 +193,58 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void resetRace() {
-        horseImage1.setTranslationX(0);
-        horseImage2.setTranslationX(0);
-        horseImage3.setTranslationX(0);
-        etBet1.setText("");
-        etBet2.setText("");
-        etBet3.setText("");
+        // Stop the race if it's running
+        if (isRaceRunning) {
+            isRaceRunning = false; // Set to false first to immediately stop the raceRunnable
+            handler.removeCallbacks(raceRunnable);
+        }
+
+        // Reset bet values
+        etBet1.setText("0");
+        etBet2.setText("0");
+        etBet3.setText("0");
+
+        // Re-enable the bet fields and start button
+        etBet1.setEnabled(true);
+        etBet2.setEnabled(true);
+        etBet3.setEnabled(true);
+        btnStart.setEnabled(true);
+
+        // Reset horse positions
+        horseImage1.setX(0);
+        horseImage2.setX(0);
+        horseImage3.setX(0);
+    }
+    private Runnable raceRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (!isRaceRunning) return;
+
+            // Example race logic to move horses
+            moveHorse(horseImage1);
+            moveHorse(horseImage2);
+            moveHorse(horseImage3);
+
+            // Check if any horse has won
+            if (checkIfHorseWon(horseImage1) || checkIfHorseWon(horseImage2) || checkIfHorseWon(horseImage3)) {
+                isRaceRunning = false;
+                btnStart.setEnabled(true);
+                etBet1.setEnabled(true);
+                etBet2.setEnabled(true);
+                etBet3.setEnabled(true);
+            } else {
+                handler.postDelayed(this, 100); // Continue running the race
+            }
+        }
+    };
+
+    private void moveHorse(ImageView horse) {
+        // Example logic to move horse
+        horse.setX(horse.getX() + random.nextInt(10));
+    }
+
+    private boolean checkIfHorseWon(ImageView horse) {
+        // Example logic to check if a horse has won
+        return horse.getX() >= raceTrackLayout.getWidth() - horse.getWidth();
     }
 }

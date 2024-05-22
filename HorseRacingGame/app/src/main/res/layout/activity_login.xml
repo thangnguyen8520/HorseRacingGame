@@ -4,13 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!-- Blue header at the top -->
-
-    <!-- Centered content -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@android:color/holo_blue_light"
+        android:background="@color/blue_main"
         android:gravity="center"
         android:text="Login Page"
         android:textColor="@android:color/white"
@@ -43,6 +40,7 @@
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login" />
+            android:text="Login"
+            android:backgroundTint="@color/blue_main" />
     </LinearLayout>
 </LinearLayout>

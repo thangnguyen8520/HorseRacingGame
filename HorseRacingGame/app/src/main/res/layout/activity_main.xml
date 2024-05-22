@@ -5,32 +5,29 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Blue header at the top -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_blue_light"
+        android:background="@color/blue_main"
         android:gravity="center"
         android:text="Horse Racing Game"
         android:textColor="@android:color/white"
         android:textSize="24sp" />
 
-    <!-- Balance text -->
     <TextView
         android:id="@+id/tv_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Balance: $1000"
         android:textSize="18sp"
+        android:textColor="@color/blue_main"
         android:layout_marginTop="16dp"/>
 
-    <!-- Horse images and their tracks -->
     <RelativeLayout
         android:id="@+id/raceTrackLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="350dp"
-        android:layout_marginTop="16dp"
-        android:layout_weight="1">
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="16dp">
 
         <ImageView
             android:id="@+id/horseImage1"
@@ -80,7 +77,6 @@
             android:background="#000000" />
     </RelativeLayout>
 
-    <!-- Betting section for Horse 1 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -99,7 +95,6 @@
             android:inputType="number" />
     </LinearLayout>
 
-    <!-- Betting section for Horse 2 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -118,7 +113,6 @@
             android:inputType="number" />
     </LinearLayout>
 
-    <!-- Betting section for Horse 3 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -137,7 +131,6 @@
             android:inputType="number" />
     </LinearLayout>
 
-    <!-- Control buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -147,15 +140,29 @@
 
         <Button
             android:id="@+id/btn_start"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="Start"
-            android:layout_marginRight="16dp" />
+            android:backgroundTint="@color/blue_main"
+            android:layout_marginEnd="8dp" />
 
         <Button
             android:id="@+id/btn_reset"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Reset" />
+            android:text="Reset"
+            android:backgroundTint="@color/blue_main"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btn_instruction"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Instruction"
+            android:backgroundTint="@color/blue_main" />
     </LinearLayout>
+
 </LinearLayout>
