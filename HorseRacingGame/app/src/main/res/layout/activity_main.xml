@@ -31,10 +31,9 @@
 
         <ImageView
             android:id="@+id/horseImage1"
-            android:layout_width="129dp"
-            android:layout_height="68dp"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/horse1" />
+            android:layout_width="101dp"
+            android:layout_height="82dp"
+            android:src="@drawable/horse1_1" />
 
         <View
             android:id="@+id/track1"
@@ -46,11 +45,10 @@
 
         <ImageView
             android:id="@+id/horseImage2"
-            android:layout_width="127dp"
-            android:layout_height="61dp"
+            android:layout_width="101dp"
+            android:layout_height="82dp"
             android:layout_below="@id/track1"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/horse2" />
+            android:src="@drawable/horse2_1" />
 
         <View
             android:id="@+id/track2"
@@ -62,11 +60,10 @@
 
         <ImageView
             android:id="@+id/horseImage3"
-            android:layout_width="125dp"
-            android:layout_height="64dp"
+            android:layout_width="101dp"
+            android:layout_height="82dp"
             android:layout_below="@id/track2"
-            android:layout_alignParentStart="true"
-            android:src="@drawable/horse3" />
+            android:src="@drawable/horse3_1" />
 
         <View
             android:id="@+id/track3"

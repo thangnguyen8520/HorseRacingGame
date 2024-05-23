@@ -1,6 +1,7 @@
 package com.example.horseracinggame;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +21,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     private ImageView horseImage1, horseImage2, horseImage3;
+    private AnimationDrawable horseAnimation1, horseAnimation2, horseAnimation3;
     private EditText etBet1, etBet2, etBet3;
     private Button btnStart, btnReset, btnInstruction;
     private TextView tvBalance;
@@ -29,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private RelativeLayout raceTrackLayout;
     private boolean isRaceRunning = false; // To track if the race is running
+    private static final int REQUEST_CODE_WIN = 1;
+    private static final int REQUEST_CODE_LOSE = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +100,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startRace() {
+        horseImage1.setImageDrawable(null);
+        horseImage1.setBackgroundResource(R.drawable.running_horse1);
+        horseAnimation1 = (AnimationDrawable) horseImage1.getBackground();
+        horseAnimation1.start();
+
+        horseImage2.setImageDrawable(null);
+        horseImage2.setBackgroundResource(R.drawable.running_horse2);
+        horseAnimation2 = (AnimationDrawable) horseImage2.getBackground();
+        horseAnimation2.start();
+
+        horseImage3.setImageDrawable(null);
+        horseImage3.setBackgroundResource(R.drawable.running_horse3);
+        horseAnimation3 = (AnimationDrawable) horseImage3.getBackground();
+        horseAnimation3.start();
         final int bet1, bet2, bet3;
 
         try {
@@ -194,17 +213,19 @@ public class MainActivity extends AppCompatActivity {
 
         if (isWin) {
             balance += (winnings + losings);
+            tvBalance.setText("Balance: $" + balance);
             Intent intent = new Intent(MainActivity.this, WinActivity.class);
             intent.putExtra("balance", balance);
             intent.putExtra("winnings", winnings);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_CODE_WIN);
         } else {
             balance += winnings;
             totalBet -= winnings;
+            tvBalance.setText("Balance: $" + balance);
             Intent intent = new Intent(MainActivity.this, LoseActivity.class);
             intent.putExtra("balance", balance);
             intent.putExtra("losses", totalBet);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_CODE_LOSE);
         }
 
         isRaceRunning = false;
@@ -230,6 +251,13 @@ public class MainActivity extends AppCompatActivity {
         horseImage1.setX(0);
         horseImage2.setX(0);
         horseImage3.setX(0);
+
+        horseImage1.setImageResource(R.drawable.horse1_1);
+        horseImage2.setImageResource(R.drawable.horse2_1);
+        horseImage3.setImageResource(R.drawable.horse3_1);
+        if (horseAnimation1 != null) horseAnimation1.stop();
+        if (horseAnimation2 != null) horseAnimation2.stop();
+        if (horseAnimation3 != null) horseAnimation3.stop();
     }
 
     private void setFieldsAndButtonsEnabled(boolean enabled) {
@@ -269,5 +297,17 @@ public class MainActivity extends AppCompatActivity {
     private boolean checkIfHorseWon(ImageView horse) {
         // Example logic to check if a horse has won
         return horse.getX() >= raceTrackLayout.getWidth() - horse.getWidth();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CODE_WIN || requestCode == REQUEST_CODE_LOSE) {
+                balance = data.getIntExtra("balance", balance);
+                tvBalance.setText("Balance: $" + balance);
+                resetRace();
+            }
+        }
     }
 }
