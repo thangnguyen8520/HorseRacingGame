@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView horseImage1, horseImage2, horseImage3;
     private AnimationDrawable horseAnimation1, horseAnimation2, horseAnimation3;
     private EditText etBet1, etBet2, etBet3;
-    private Button btnStart, btnReset, btnInstruction, btnRecharge;
+    private Button btnStart, btnReset, btnInstruction, btnRecharge, btnLogout;
     private TextView tvBalance;
     private int balance = 1000;
     private Random random;
@@ -35,9 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_LOSE = 2;
     private static final int REQUEST_CODE_DRAW = 3;
     private static final int REQUEST_CODE_RECHARGE = 4;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         btnReset = findViewById(R.id.btn_reset);
         btnInstruction = findViewById(R.id.btn_instruction);
         btnRecharge = findViewById(R.id.btn_recharge);
+        btnLogout = findViewById(R.id.btn_logout);
         tvBalance = findViewById(R.id.tv_balance);
         raceTrackLayout = findViewById(R.id.raceTrackLayout);
         random = new Random();
@@ -111,6 +109,29 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, RechargeActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_RECHARGE);
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Stop any ongoing race
+                if (isRaceRunning) {
+                    isRaceRunning = false;
+                    handler.removeCallbacks(raceRunnable);
+                }
+
+                // Release media player resources
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
+
+                // Navigate back to the login screen or main screen
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class); // Change LoginActivity to your login activity class
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish(); // Finish the current activity
             }
         });
     }
@@ -287,6 +308,18 @@ public class MainActivity extends AppCompatActivity {
         horseImage2.setX(0);
         horseImage3.setX(0);
 
+        // Stop the animations if they are initialized
+        if (horseAnimation1 != null) {
+            horseAnimation1.stop();
+        }
+        if (horseAnimation2 != null) {
+            horseAnimation2.stop();
+        }
+        if (horseAnimation3 != null) {
+            horseAnimation3.stop();
+        }
+
+        // Optionally, reset the horse images to their static state if needed
         horseImage1.setImageResource(R.drawable.horse1_1);
         horseImage2.setImageResource(R.drawable.horse2_1);
         horseImage3.setImageResource(R.drawable.horse3_1);
@@ -296,6 +329,7 @@ public class MainActivity extends AppCompatActivity {
         horseAnimation1.stop();
         horseAnimation2.stop();
         horseAnimation3.stop();
+
     }
 
     private void setFieldsAndButtonsEnabled(boolean enabled) {
@@ -306,6 +340,7 @@ public class MainActivity extends AppCompatActivity {
         btnReset.setEnabled(enabled);
         btnInstruction.setEnabled(enabled);
         btnRecharge.setEnabled(enabled);
+        btnLogout.setEnabled(enabled);
     }
 
     private Runnable raceRunnable = new Runnable() {
