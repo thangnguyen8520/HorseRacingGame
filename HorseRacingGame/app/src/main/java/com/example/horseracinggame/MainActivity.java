@@ -79,13 +79,16 @@ public class MainActivity extends AppCompatActivity {
             tvBalance.setText("Balance: $" + balance);
         }
 
+
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isRaceRunning) {
+
                     startRace();
                 }
             }
+
         });
 
         btnReset.setOnClickListener(new View.OnClickListener() {
@@ -113,20 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startRace() {
-        horseImage1.setImageDrawable(null);
-        horseImage1.setBackgroundResource(R.drawable.running_horse1);
-        horseAnimation1 = (AnimationDrawable) horseImage1.getBackground();
-        horseAnimation1.start();
 
-        horseImage2.setImageDrawable(null);
-        horseImage2.setBackgroundResource(R.drawable.running_horse2);
-        horseAnimation2 = (AnimationDrawable) horseImage2.getBackground();
-        horseAnimation2.start();
-
-        horseImage3.setImageDrawable(null);
-        horseImage3.setBackgroundResource(R.drawable.running_horse3);
-        horseAnimation3 = (AnimationDrawable) horseImage3.getBackground();
-        horseAnimation3.start();
         final int bet1, bet2, bet3;
 
         try {
@@ -147,8 +137,26 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid bet for Horse 3", Toast.LENGTH_SHORT).show();
             return;
         }
+        horseImage1.setImageDrawable(null);
+        horseImage1.setBackgroundResource(R.drawable.running_horse1);
+        horseAnimation1 = (AnimationDrawable) horseImage1.getBackground();
+        horseAnimation1.start();
+
+        horseImage2.setImageDrawable(null);
+        horseImage2.setBackgroundResource(R.drawable.running_horse2);
+        horseAnimation2 = (AnimationDrawable) horseImage2.getBackground();
+        horseAnimation2.start();
+
+        horseImage3.setImageDrawable(null);
+        horseImage3.setBackgroundResource(R.drawable.running_horse3);
+        horseAnimation3 = (AnimationDrawable) horseImage3.getBackground();
+        horseAnimation3.start();
+
+
 
         final int totalBet = bet1 + bet2 + bet3;
+
+
 
         if (totalBet > balance) {
             Toast.makeText(this, "Insufficient balance!", Toast.LENGTH_SHORT).show();
@@ -201,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
             winner = 3;
         }
 
+        String winningHorse = null;
         int winnings = 0;
         int losings = 0;
         int totalBet = bet1 + bet2 + bet3;
@@ -208,12 +217,15 @@ public class MainActivity extends AppCompatActivity {
         if (winner == 1) {
             winnings = bet1 * 2;
             losings = bet2 + bet3;
+            winningHorse = "Black Horse";
         } else if (winner == 2) {
             winnings = bet2 * 2;
             losings = bet1 + bet3;
+            winningHorse = "White Horse";
         } else if (winner == 3) {
             winnings = bet3 * 2;
             losings = bet2 + bet1;
+            winningHorse = "Brown Horse";
         }
 
         boolean isWin = false;
@@ -228,14 +240,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (isWin) {
+            winnings -= losings;
             balance += (winnings + losings);
             tvBalance.setText("Balance: $" + balance);
             Intent intent = new Intent(MainActivity.this, WinActivity.class);
+            intent.putExtra("winningHorse", winningHorse);
             intent.putExtra("balance", balance);
             intent.putExtra("winnings", winnings);
             startActivityForResult(intent, REQUEST_CODE_WIN);
         } else if(isDraw){
+            balance += totalBet;
+            tvBalance.setText("Balance: $" + balance);
             Intent intent = new Intent(MainActivity.this, DrawActivity.class);
+            intent.putExtra("winningHorse", winningHorse);
             intent.putExtra("balance", balance);
             startActivityForResult(intent, REQUEST_CODE_DRAW);
         }else {
@@ -243,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
             totalBet -= winnings;
             tvBalance.setText("Balance: $" + balance);
             Intent intent = new Intent(MainActivity.this, LoseActivity.class);
+            intent.putExtra("winningHorse", winningHorse);
             intent.putExtra("balance", balance);
             intent.putExtra("losses", totalBet);
             startActivityForResult(intent, REQUEST_CODE_LOSE);
@@ -251,6 +269,7 @@ public class MainActivity extends AppCompatActivity {
         isRaceRunning = false;
         setFieldsAndButtonsEnabled(true);
     }
+
 
     private void resetRace() {
         // Stop the race if it's running
@@ -336,4 +355,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }
