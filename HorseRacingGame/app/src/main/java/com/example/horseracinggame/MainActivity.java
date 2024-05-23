@@ -112,8 +112,23 @@ public class MainActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle logout functionality here
-                finish();
+                // Stop any ongoing race
+                if (isRaceRunning) {
+                    isRaceRunning = false;
+                    handler.removeCallbacks(raceRunnable);
+                }
+
+                // Release media player resources
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
+
+                // Navigate back to the login screen or main screen
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class); // Change LoginActivity to your login activity class
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish(); // Finish the current activity
             }
         });
     }
