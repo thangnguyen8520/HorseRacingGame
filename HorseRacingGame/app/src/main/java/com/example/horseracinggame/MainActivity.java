@@ -278,12 +278,21 @@ public class MainActivity extends AppCompatActivity {
         horseImage2.setX(0);
         horseImage3.setX(0);
 
-//        horseImage1.setImageResource(R.drawable.horse1_1);
-//        horseImage2.setImageResource(R.drawable.horse2_1);
-//        horseImage3.setImageResource(R.drawable.horse3_1);
-        horseAnimation1.stop();
-        horseAnimation2.stop();
-        horseAnimation3.stop();
+        // Stop the animations if they are initialized
+        if (horseAnimation1 != null) {
+            horseAnimation1.stop();
+        }
+        if (horseAnimation2 != null) {
+            horseAnimation2.stop();
+        }
+        if (horseAnimation3 != null) {
+            horseAnimation3.stop();
+        }
+
+        // Optionally, reset the horse images to their static state if needed
+        horseImage1.setImageResource(R.drawable.horse1_1);
+        horseImage2.setImageResource(R.drawable.horse2_1);
+        horseImage3.setImageResource(R.drawable.horse3_1);
     }
 
     private void setFieldsAndButtonsEnabled(boolean enabled) {
