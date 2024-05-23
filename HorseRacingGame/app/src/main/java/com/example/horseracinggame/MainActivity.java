@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean isRaceRunning = false; // To track if the race is running
     private static final int REQUEST_CODE_WIN = 1;
     private static final int REQUEST_CODE_LOSE = 2;
+    private static final int REQUEST_CODE_DRAW = 3;
+
 
 
     @Override
@@ -204,11 +206,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         boolean isWin = false;
+        boolean isDraw = false;
 
-        if (winnings - losings >= 0){
+        if (winnings - losings > 0){
             isWin = true;
         } else if (winnings - losings < 0) {
             isWin = false;
+        }else if (winnings - losings == 0) {
+            isDraw = true;
         }
 
         if (isWin) {
@@ -218,7 +223,11 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("balance", balance);
             intent.putExtra("winnings", winnings);
             startActivityForResult(intent, REQUEST_CODE_WIN);
-        } else {
+        } else if(isDraw){
+            Intent intent = new Intent(MainActivity.this, DrawActivity.class);
+            intent.putExtra("balance", balance);
+            startActivityForResult(intent, REQUEST_CODE_DRAW);
+        }else {
             balance += winnings;
             totalBet -= winnings;
             tvBalance.setText("Balance: $" + balance);
@@ -255,9 +264,9 @@ public class MainActivity extends AppCompatActivity {
         horseImage1.setImageResource(R.drawable.horse1_1);
         horseImage2.setImageResource(R.drawable.horse2_1);
         horseImage3.setImageResource(R.drawable.horse3_1);
-        if (horseAnimation1 != null) horseAnimation1.stop();
-        if (horseAnimation2 != null) horseAnimation2.stop();
-        if (horseAnimation3 != null) horseAnimation3.stop();
+        horseAnimation1.stop();
+        horseAnimation2.stop();
+        horseAnimation3.stop();
     }
 
     private void setFieldsAndButtonsEnabled(boolean enabled) {

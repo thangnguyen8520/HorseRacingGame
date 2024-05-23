@@ -15,6 +15,7 @@
 
         <activity android:name=".WinActivity" />
         <activity android:name=".LoseActivity" />
+        <activity android:name=".DrawActivity" />
         <activity android:name=".InstructionActivity" />
         <activity android:name=".LoginActivity" android:exported="true">
             <intent-filter>
