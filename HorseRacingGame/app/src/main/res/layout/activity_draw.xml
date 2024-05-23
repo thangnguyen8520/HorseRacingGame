@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/tv_draw_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="It's a draw!"
+        android:textSize="24sp"
+        android:textColor="@color/blue_main"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/tv_balance_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your balance remains $0"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/btn_back_to_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back to Main"
+        android:backgroundTint="@color/blue_main"
+        android:textColor="@android:color/white" />
+</LinearLayout>

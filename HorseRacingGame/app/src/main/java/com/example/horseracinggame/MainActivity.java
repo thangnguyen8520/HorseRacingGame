@@ -1,6 +1,7 @@
 package com.example.horseracinggame;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,8 +21,9 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
 
     private ImageView horseImage1, horseImage2, horseImage3;
+    private AnimationDrawable horseAnimation1, horseAnimation2, horseAnimation3;
     private EditText etBet1, etBet2, etBet3;
-    private Button btnStart, btnReset, btnInstruction;
+    private Button btnStart, btnReset, btnInstruction, btnRecharge;
     private TextView tvBalance;
     private int balance = 1000;
     private Random random;
@@ -29,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private RelativeLayout raceTrackLayout;
     private boolean isRaceRunning = false; // To track if the race is running
+    private static final int REQUEST_CODE_WIN = 1;
+    private static final int REQUEST_CODE_LOSE = 2;
+    private static final int REQUEST_CODE_DRAW = 3;
+    private static final int REQUEST_CODE_RECHARGE = 4;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         btnStart = findViewById(R.id.btn_start);
         btnReset = findViewById(R.id.btn_reset);
         btnInstruction = findViewById(R.id.btn_instruction);
+        btnRecharge = findViewById(R.id.btn_recharge);
         tvBalance = findViewById(R.id.tv_balance);
         raceTrackLayout = findViewById(R.id.raceTrackLayout);
         random = new Random();
@@ -92,9 +102,31 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnRecharge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RechargeActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_RECHARGE);
+            }
+        });
     }
 
     private void startRace() {
+        horseImage1.setImageDrawable(null);
+        horseImage1.setBackgroundResource(R.drawable.running_horse1);
+        horseAnimation1 = (AnimationDrawable) horseImage1.getBackground();
+        horseAnimation1.start();
+
+        horseImage2.setImageDrawable(null);
+        horseImage2.setBackgroundResource(R.drawable.running_horse2);
+        horseAnimation2 = (AnimationDrawable) horseImage2.getBackground();
+        horseAnimation2.start();
+
+        horseImage3.setImageDrawable(null);
+        horseImage3.setBackgroundResource(R.drawable.running_horse3);
+        horseAnimation3 = (AnimationDrawable) horseImage3.getBackground();
+        horseAnimation3.start();
         final int bet1, bet2, bet3;
 
         try {
@@ -185,26 +217,35 @@ public class MainActivity extends AppCompatActivity {
         }
 
         boolean isWin = false;
+        boolean isDraw = false;
 
-        if (winnings - losings >= 0){
+        if (winnings - losings > 0){
             isWin = true;
         } else if (winnings - losings < 0) {
             isWin = false;
+        }else if (winnings - losings == 0) {
+            isDraw = true;
         }
 
         if (isWin) {
             balance += (winnings + losings);
+            tvBalance.setText("Balance: $" + balance);
             Intent intent = new Intent(MainActivity.this, WinActivity.class);
             intent.putExtra("balance", balance);
             intent.putExtra("winnings", winnings);
-            startActivity(intent);
-        } else {
+            startActivityForResult(intent, REQUEST_CODE_WIN);
+        } else if(isDraw){
+            Intent intent = new Intent(MainActivity.this, DrawActivity.class);
+            intent.putExtra("balance", balance);
+            startActivityForResult(intent, REQUEST_CODE_DRAW);
+        }else {
             balance += winnings;
             totalBet -= winnings;
+            tvBalance.setText("Balance: $" + balance);
             Intent intent = new Intent(MainActivity.this, LoseActivity.class);
             intent.putExtra("balance", balance);
             intent.putExtra("losses", totalBet);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_CODE_LOSE);
         }
 
         isRaceRunning = false;
@@ -230,6 +271,13 @@ public class MainActivity extends AppCompatActivity {
         horseImage1.setX(0);
         horseImage2.setX(0);
         horseImage3.setX(0);
+
+        horseImage1.setImageResource(R.drawable.horse1_1);
+        horseImage2.setImageResource(R.drawable.horse2_1);
+        horseImage3.setImageResource(R.drawable.horse3_1);
+        horseAnimation1.stop();
+        horseAnimation2.stop();
+        horseAnimation3.stop();
     }
 
     private void setFieldsAndButtonsEnabled(boolean enabled) {
@@ -239,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
         btnStart.setEnabled(enabled);
         btnReset.setEnabled(enabled);
         btnInstruction.setEnabled(enabled);
+        btnRecharge.setEnabled(enabled);
     }
 
     private Runnable raceRunnable = new Runnable() {
@@ -269,5 +318,22 @@ public class MainActivity extends AppCompatActivity {
     private boolean checkIfHorseWon(ImageView horse) {
         // Example logic to check if a horse has won
         return horse.getX() >= raceTrackLayout.getWidth() - horse.getWidth();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CODE_WIN || requestCode == REQUEST_CODE_LOSE || requestCode == REQUEST_CODE_DRAW) {
+                balance = data.getIntExtra("balance", balance);
+                tvBalance.setText("Balance: $" + balance);
+                resetRace();
+            }
+            if (requestCode == REQUEST_CODE_RECHARGE) {
+                int rechargeAmount = data.getIntExtra("rechargeAmount", 0);
+                balance += rechargeAmount;
+                tvBalance.setText("Balance: $" + balance);
+            }
+        }
     }
 }

@@ -1,0 +1,22 @@
+<resources>
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Custom style for Login text -->
+    <style name="LoginTextStyle">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">@color/blue_main</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#AA000000</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">3</item>
+        <item name="android:gravity">center</item>
+    </style>
+</resources>
