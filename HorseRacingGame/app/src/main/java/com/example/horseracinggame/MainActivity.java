@@ -323,12 +323,6 @@ public class MainActivity extends AppCompatActivity {
         horseImage1.setImageResource(R.drawable.horse1_1);
         horseImage2.setImageResource(R.drawable.horse2_1);
         horseImage3.setImageResource(R.drawable.horse3_1);
-        horseImage1.setImageDrawable(null);
-        horseImage2.setImageDrawable(null);
-        horseImage3.setImageDrawable(null);
-        horseAnimation1.stop();
-        horseAnimation2.stop();
-        horseAnimation3.stop();
 
     }
 
@@ -379,6 +373,9 @@ public class MainActivity extends AppCompatActivity {
                 balance = data.getIntExtra("balance", balance);
                 tvBalance.setText("Balance: $" + balance);
                 resetRace();
+                horseImage1.setImageDrawable(null);
+                horseImage2.setImageDrawable(null);
+                horseImage3.setImageDrawable(null);
             }
             if (requestCode == REQUEST_CODE_RECHARGE) {
                 int rechargeAmount = data.getIntExtra("rechargeAmount", 0);

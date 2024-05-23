@@ -1,174 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:padding="16dp">
+<TextView
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="wrap_content"
+    android:background="@color/blue_main"
+    android:gravity="center"
+    android:text="Horse Racing Game"
+    android:textColor="@android:color/white"
+    android:textSize="24sp" />
+<TextView
+    android:id="@+id/tv_balance"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:text="Balance: $1000"
+    android:textColor="@color/blue_main"
+    android:textSize="18sp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/blue_main"
-        android:gravity="center"
-        android:text="Horse Racing Game"
-        android:textColor="@android:color/white"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/tv_balance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Balance: $1000"
-        android:textColor="@color/blue_main"
-        android:textSize="18sp" />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp">
 
     <Button
         android:id="@+id/btn_recharge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:backgroundTint="@color/blue_main"
         android:text="Recharge"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
 
-    <RelativeLayout
-        android:id="@+id/raceTrackLayout"
-        android:layout_width="match_parent"
-        android:layout_height="275dp"
-        android:layout_marginTop="16dp">
-
-        <ImageView
-            android:id="@+id/horseImage1"
-            android:layout_width="101dp"
-            android:layout_height="82dp"
-            android:src="@drawable/horse1_1" />
-
-        <View
-            android:id="@+id/track1"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_below="@id/horseImage1"
-            android:layout_marginTop="4dp"
-            android:background="#000000" />
-
-        <ImageView
-            android:id="@+id/horseImage2"
-            android:layout_width="101dp"
-            android:layout_height="82dp"
-            android:layout_below="@id/track1"
-            android:src="@drawable/horse2_1" />
-
-        <View
-            android:id="@+id/track2"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_below="@id/horseImage2"
-            android:layout_marginTop="4dp"
-            android:background="#000000" />
-
-        <ImageView
-            android:id="@+id/horseImage3"
-            android:layout_width="101dp"
-            android:layout_height="82dp"
-            android:layout_below="@id/track2"
-            android:src="@drawable/horse3_1" />
-
-        <View
-            android:id="@+id/track3"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_below="@id/horseImage3"
-            android:layout_marginTop="4dp"
-            android:background="#000000" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_instruction"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+        android:backgroundTint="@color/blue_main"
+        android:text="Instruction"
+        android:textColor="@android:color/white"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"/>
+</RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bet on Horse 1: " />
-        <EditText
-            android:id="@+id/et_bet1"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-    </LinearLayout>
-
-    <LinearLayout
+<RelativeLayout
+    android:id="@+id/raceTrackLayout"
+    android:layout_width="match_parent"
+    android:layout_height="275dp"
+    android:layout_marginTop="16dp">
+    <ImageView
+        android:id="@+id/horseImage1"
+        android:layout_width="101dp"
+        android:layout_height="82dp"
+        android:src="@drawable/horse1_1" />
+    <View
+        android:id="@+id/track1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bet on Horse 2: " />
-        <EditText
-            android:id="@+id/et_bet2"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-    </LinearLayout>
-
-    <LinearLayout
+        android:layout_height="2dp"
+        android:layout_below="@id/horseImage1"
+        android:layout_marginTop="4dp"
+        android:background="#000000" />
+    <ImageView
+        android:id="@+id/horseImage2"
+        android:layout_width="101dp"
+        android:layout_height="82dp"
+        android:layout_below="@id/track1"
+        android:src="@drawable/horse2_1" />
+    <View
+        android:id="@+id/track2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bet on Horse 3: " />
-        <EditText
-            android:id="@+id/et_bet3"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:inputType="number" />
-    </LinearLayout>
-
-    <LinearLayout
+        android:layout_height="2dp"
+        android:layout_below="@id/horseImage2"
+        android:layout_marginTop="4dp"
+        android:background="#000000" />
+    <ImageView
+        android:id="@+id/horseImage3"
+        android:layout_width="101dp"
+        android:layout_height="82dp"
+        android:layout_below="@id/track2"
+        android:src="@drawable/horse3_1" />
+    <View
+        android:id="@+id/track3"
         android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/horseImage3"
+        android:layout_marginTop="4dp"
+        android:background="#000000" />
+</RelativeLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="16dp">
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="16dp">
+        android:text="Bet on Horse 1: " />
+    <EditText
+        android:id="@+id/et_bet1"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:inputType="number" />
+</LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="16dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bet on Horse 2: " />
+    <EditText
+        android:id="@+id/et_bet2"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:inputType="number" />
+</LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="16dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bet on Horse 3: " />
+    <EditText
+        android:id="@+id/et_bet3"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:inputType="number" />
+</LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:layout_marginTop="16dp">
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:backgroundTint="@color/blue_main"
+        android:layout_marginEnd="8dp" />
+    <Button
+        android:id="@+id/btn_reset"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:backgroundTint="@color/blue_main"
+        android:layout_marginEnd="8dp" />
 
-        <Button
-            android:id="@+id/btn_start"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Start"
-            android:backgroundTint="@color/blue_main"
-            android:layout_marginEnd="8dp" />
-
-        <Button
-            android:id="@+id/btn_reset"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Reset"
-            android:backgroundTint="@color/blue_main"
-            android:layout_marginEnd="8dp" />
-
-        <Button
-            android:id="@+id/btn_instruction"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Instruction"
-            android:backgroundTint="@color/blue_main" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:backgroundTint="@color/blue_main" />
+</LinearLayout>
 
 </LinearLayout>
