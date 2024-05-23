@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView horseImage1, horseImage2, horseImage3;
     private AnimationDrawable horseAnimation1, horseAnimation2, horseAnimation3;
     private EditText etBet1, etBet2, etBet3;
-    private Button btnStart, btnReset, btnInstruction, btnRecharge;
+    private Button btnStart, btnReset, btnInstruction, btnRecharge, btnLogout;
     private TextView tvBalance;
     private int balance = 1000;
     private Random random;
@@ -35,9 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_LOSE = 2;
     private static final int REQUEST_CODE_DRAW = 3;
     private static final int REQUEST_CODE_RECHARGE = 4;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         btnReset = findViewById(R.id.btn_reset);
         btnInstruction = findViewById(R.id.btn_instruction);
         btnRecharge = findViewById(R.id.btn_recharge);
+        btnLogout = findViewById(R.id.btn_logout);
         tvBalance = findViewById(R.id.tv_balance);
         raceTrackLayout = findViewById(R.id.raceTrackLayout);
         random = new Random();
@@ -108,6 +106,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, RechargeActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_RECHARGE);
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle logout functionality here
+                finish();
             }
         });
     }
@@ -288,6 +294,7 @@ public class MainActivity extends AppCompatActivity {
         btnReset.setEnabled(enabled);
         btnInstruction.setEnabled(enabled);
         btnRecharge.setEnabled(enabled);
+        btnLogout.setEnabled(enabled);
     }
 
     private Runnable raceRunnable = new Runnable() {

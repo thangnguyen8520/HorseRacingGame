@@ -23,14 +23,31 @@
         android:textColor="@color/blue_main"
         android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/btn_recharge"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/blue_main"
-        android:text="Recharge"
-        android:textColor="@android:color/white" />
+        android:layout_marginTop="16dp">
+
+        <Button
+            android:id="@+id/btn_recharge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue_main"
+            android:text="Recharge"
+            android:textColor="@android:color/white"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"/>
+
+        <Button
+            android:id="@+id/btn_instruction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue_main"
+            android:text="Instruction"
+            android:textColor="@android:color/white"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/raceTrackLayout"
@@ -163,11 +180,11 @@
             android:layout_marginEnd="8dp" />
 
         <Button
-            android:id="@+id/btn_instruction"
+            android:id="@+id/btn_logout"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Instruction"
+            android:text="Logout"
             android:backgroundTint="@color/blue_main" />
     </LinearLayout>
 
