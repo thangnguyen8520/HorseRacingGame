@@ -1,6 +1,8 @@
 package com.example.horseracinggame;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_LOSE = 2;
     private static final int REQUEST_CODE_DRAW = 3;
     private static final int REQUEST_CODE_RECHARGE = 4;
+    private static final String PREFS_NAME = "HorseRacingGamePrefs";
+    private static final String PREF_BALANCE = "balance";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("balance")) {
-            balance = intent.getIntExtra("balance", 1000); // Default balance is 1000
+            SharedPreferences preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+            balance = preferences.getInt(PREF_BALANCE, 1000); // Default balance is 1000 if not found
             tvBalance.setText("Balance: $" + balance);
         }
 
@@ -99,39 +104,21 @@ public class MainActivity extends AppCompatActivity {
         btnInstruction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, InstructionActivity.class);
-                startActivity(intent);
+                showInstructions();
             }
         });
 
         btnRecharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RechargeActivity.class);
-                startActivityForResult(intent, REQUEST_CODE_RECHARGE);
+                rechargeBalance();
             }
         });
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Stop any ongoing race
-                if (isRaceRunning) {
-                    isRaceRunning = false;
-                    handler.removeCallbacks(raceRunnable);
-                }
-
-                // Release media player resources
-                if (mediaPlayer != null) {
-                    mediaPlayer.release();
-                    mediaPlayer = null;
-                }
-
-                // Navigate back to the login screen or main screen
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class); // Change LoginActivity to your login activity class
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish(); // Finish the current activity
+                logout();
             }
         });
     }
@@ -376,6 +363,7 @@ public class MainActivity extends AppCompatActivity {
                 horseImage1.setImageDrawable(null);
                 horseImage2.setImageDrawable(null);
                 horseImage3.setImageDrawable(null);
+                saveBalance();
             }
             if (requestCode == REQUEST_CODE_RECHARGE) {
                 int rechargeAmount = data.getIntExtra("rechargeAmount", 0);
@@ -384,6 +372,43 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    private void showInstructions() {
+        Intent intent = new Intent(MainActivity.this, InstructionActivity.class);
+        startActivity(intent);
+    }
 
+    private void rechargeBalance() {
+        // Recharge balance logic
+        Intent intent = new Intent(MainActivity.this, RechargeActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_RECHARGE);
+        saveBalance();
+    }
+
+    private void logout() {
+        // Stop any ongoing race
+        if (isRaceRunning) {
+            isRaceRunning = false;
+            handler.removeCallbacks(raceRunnable);
+        }
+
+        // Release media player resources
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+
+        // Navigate back to the login screen or main screen
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class); // Change LoginActivity to your login activity class
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish(); // Finish the current activity
+    }
+
+    private void saveBalance() {
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(PREF_BALANCE, balance);
+        editor.apply();
+    }
 
 }
