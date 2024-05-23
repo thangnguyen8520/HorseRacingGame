@@ -8,13 +8,14 @@
     android:background="@android:color/white">
 
     <TextView
-        android:id="@+id/tv_win_message"
+        android:id="@+id/tv_lose_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Congratulations!"
+        android:text="You lost."
         android:textSize="24sp"
         android:textColor="@color/blue_main"
         android:layout_marginBottom="16dp" />
+
 
     <TextView
         android:id="@+id/tv_balance_message"
