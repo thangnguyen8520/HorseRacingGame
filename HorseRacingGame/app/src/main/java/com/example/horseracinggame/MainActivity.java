@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void startRace() {
         final int bet1, bet2, bet3;
+
         try {
             bet1 = Integer.parseInt(etBet1.getText().toString());
         } catch (NumberFormatException e) {
@@ -169,22 +170,40 @@ public class MainActivity extends AppCompatActivity {
         }
 
         int winnings = 0;
+        int losings = 0;
+        int totalBet = bet1 + bet2 + bet3;
+
         if (winner == 1) {
             winnings = bet1 * 2;
+            losings = bet2 + bet3;
         } else if (winner == 2) {
             winnings = bet2 * 2;
+            losings = bet1 + bet3;
         } else if (winner == 3) {
             winnings = bet3 * 2;
+            losings = bet2 + bet1;
         }
 
-        balance += winnings;
-        tvBalance.setText("Balance: $" + balance);
+        boolean isWin = false;
 
-        Toast.makeText(this, "Horse " + winner + " wins! You won $" + winnings, Toast.LENGTH_SHORT).show();
+        if (winnings - losings >= 0){
+            isWin = true;
+        } else if (winnings - losings < 0) {
+            isWin = false;
+        }
 
-        if (balance > 0) {
+        if (isWin) {
+            balance += (winnings + losings);
             Intent intent = new Intent(MainActivity.this, WinActivity.class);
             intent.putExtra("balance", balance);
+            intent.putExtra("winnings", winnings);
+            startActivity(intent);
+        } else {
+            balance += winnings;
+            totalBet -= winnings;
+            Intent intent = new Intent(MainActivity.this, LoseActivity.class);
+            intent.putExtra("balance", balance);
+            intent.putExtra("losses", totalBet);
             startActivity(intent);
         }
 
