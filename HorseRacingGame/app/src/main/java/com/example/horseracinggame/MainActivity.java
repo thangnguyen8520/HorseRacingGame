@@ -272,9 +272,9 @@ public class MainActivity extends AppCompatActivity {
         horseImage2.setX(0);
         horseImage3.setX(0);
 
-        horseImage1.setImageResource(R.drawable.horse1_1);
-        horseImage2.setImageResource(R.drawable.horse2_1);
-        horseImage3.setImageResource(R.drawable.horse3_1);
+//        horseImage1.setImageResource(R.drawable.horse1_1);
+//        horseImage2.setImageResource(R.drawable.horse2_1);
+//        horseImage3.setImageResource(R.drawable.horse3_1);
         horseAnimation1.stop();
         horseAnimation2.stop();
         horseAnimation3.stop();
