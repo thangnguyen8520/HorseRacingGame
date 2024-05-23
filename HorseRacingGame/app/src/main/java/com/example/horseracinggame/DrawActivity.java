@@ -9,21 +9,23 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class DrawActivity extends AppCompatActivity {
-    private TextView tvDrawMessage, tvBalanceMessage;
+    private TextView tvWinningHorse, tvDrawMessage, tvBalanceMessage;
     private Button btnBackToMain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw);
-
+        tvWinningHorse = findViewById(R.id.tv_winning_horse);
         tvDrawMessage = findViewById(R.id.tv_draw_message);
         tvBalanceMessage = findViewById(R.id.tv_balance_message);
         btnBackToMain = findViewById(R.id.btn_back_to_main);
 
         Intent intent = getIntent();
+        String winningHorse = intent.getStringExtra("winningHorse");
         int balance = intent.getIntExtra("balance", 0);
 
+        tvWinningHorse.setText("Winning Horse: " + winningHorse);
         tvBalanceMessage.setText("Your balance remains $" + balance);
 
         btnBackToMain.setOnClickListener(new View.OnClickListener() {

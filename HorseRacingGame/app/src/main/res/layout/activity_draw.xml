@@ -8,6 +8,15 @@
     android:background="@android:color/white">
 
     <TextView
+        android:id="@+id/tv_winning_horse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Winning Horse: Black Horse"
+        android:textSize="24sp"
+        android:textColor="@color/blue_main"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
         android:id="@+id/tv_draw_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

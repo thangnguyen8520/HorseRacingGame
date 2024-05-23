@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class WinActivity extends AppCompatActivity {
-    private TextView tvWinMessage, tvBalanceMessage;
+    private TextView tvWinningHorse, tvWinMessage, tvBalanceMessage;
     private Button btnBackToMain;
 
     @Override
@@ -17,14 +17,17 @@ public class WinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win);
 
+        tvWinningHorse = findViewById(R.id.tv_winning_horse);
         tvWinMessage = findViewById(R.id.tv_win_message);
         tvBalanceMessage = findViewById(R.id.tv_balance_message);
         btnBackToMain = findViewById(R.id.btn_back_to_main);
 
         Intent intent = getIntent();
+        String winningHorse = intent.getStringExtra("winningHorse");
         int balance = intent.getIntExtra("balance", 0);
         int winnings = intent.getIntExtra("winnings", 0);
 
+        tvWinningHorse.setText("Winning Horse: " + winningHorse);
         tvWinMessage.setText("Congratulations! You won $" + winnings + "!");
         tvBalanceMessage.setText("Your new balance is $" + balance);
 
