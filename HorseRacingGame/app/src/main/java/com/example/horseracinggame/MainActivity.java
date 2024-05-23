@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView horseImage1, horseImage2, horseImage3;
     private AnimationDrawable horseAnimation1, horseAnimation2, horseAnimation3;
     private EditText etBet1, etBet2, etBet3;
-    private Button btnStart, btnReset, btnInstruction;
+    private Button btnStart, btnReset, btnInstruction, btnRecharge;
     private TextView tvBalance;
     private int balance = 1000;
     private Random random;
@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_WIN = 1;
     private static final int REQUEST_CODE_LOSE = 2;
     private static final int REQUEST_CODE_DRAW = 3;
+    private static final int REQUEST_CODE_RECHARGE = 4;
+
 
 
 
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         btnStart = findViewById(R.id.btn_start);
         btnReset = findViewById(R.id.btn_reset);
         btnInstruction = findViewById(R.id.btn_instruction);
+        btnRecharge = findViewById(R.id.btn_recharge);
         tvBalance = findViewById(R.id.tv_balance);
         raceTrackLayout = findViewById(R.id.raceTrackLayout);
         random = new Random();
@@ -97,6 +100,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, InstructionActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btnRecharge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RechargeActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_RECHARGE);
             }
         });
     }
@@ -276,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
         btnStart.setEnabled(enabled);
         btnReset.setEnabled(enabled);
         btnInstruction.setEnabled(enabled);
+        btnRecharge.setEnabled(enabled);
     }
 
     private Runnable raceRunnable = new Runnable() {
@@ -312,10 +324,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_CODE_WIN || requestCode == REQUEST_CODE_LOSE) {
+            if (requestCode == REQUEST_CODE_WIN || requestCode == REQUEST_CODE_LOSE || requestCode == REQUEST_CODE_DRAW) {
                 balance = data.getIntExtra("balance", balance);
                 tvBalance.setText("Balance: $" + balance);
                 resetRace();
+            }
+            if (requestCode == REQUEST_CODE_RECHARGE) {
+                int rechargeAmount = data.getIntExtra("rechargeAmount", 0);
+                balance += rechargeAmount;
+                tvBalance.setText("Balance: $" + balance);
             }
         }
     }

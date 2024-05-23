@@ -2,16 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/blue_main"
-        android:gravity="center"
-        android:text="Login Page"
-        android:textColor="@android:color/white"
-        android:textSize="35sp" />
+    <ImageView
+        android:id="@+id/login_image"
+        android:layout_width="wrap_content"
+        android:layout_height="246dp"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/LoginImage" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,12 +23,22 @@
         android:gravity="center"
         android:padding="16dp">
 
+        <!-- Added TextView for "Login" label with custom style -->
+        <TextView
+            android:id="@+id/tv_login_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            style="@style/LoginTextStyle"
+            android:layout_marginBottom="16dp"/>
+
         <EditText
             android:id="@+id/et_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"/>
 
         <EditText
             android:id="@+id/et_password"
@@ -34,13 +46,28 @@
             android:layout_height="wrap_content"
             android:hint="Password"
             android:inputType="textPassword"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"/>
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login"
-            android:backgroundTint="@color/blue_main" />
+            android:backgroundTint="@color/blue_main"
+            android:textColor="@android:color/white"
+            android:padding="12dp" />
     </LinearLayout>
+
+    <!-- Added TextView for "Patch 1.0.0" footer -->
+    <TextView
+        android:id="@+id/tv_patch_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Patch 1.0.0"
+        android:textSize="14sp"
+        android:textColor="@color/blue_main"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:padding="8dp"/>
 </LinearLayout>

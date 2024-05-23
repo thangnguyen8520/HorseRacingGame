@@ -18,10 +18,19 @@
         android:id="@+id/tv_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Balance: $1000"
-        android:textSize="18sp"
         android:textColor="@color/blue_main"
-        android:layout_marginTop="16dp"/>
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btn_recharge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/blue_main"
+        android:text="Recharge"
+        android:textColor="@android:color/white" />
 
     <RelativeLayout
         android:id="@+id/raceTrackLayout"
