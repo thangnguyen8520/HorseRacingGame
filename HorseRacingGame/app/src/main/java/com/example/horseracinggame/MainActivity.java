@@ -137,6 +137,19 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid bet for Horse 3", Toast.LENGTH_SHORT).show();
             return;
         }
+
+
+
+
+        final int totalBet = bet1 + bet2 + bet3;
+
+
+
+        if (totalBet > balance) {
+            Toast.makeText(this, "Insufficient balance!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         horseImage1.setImageDrawable(null);
         horseImage1.setBackgroundResource(R.drawable.running_horse1);
         horseAnimation1 = (AnimationDrawable) horseImage1.getBackground();
@@ -151,18 +164,6 @@ public class MainActivity extends AppCompatActivity {
         horseImage3.setBackgroundResource(R.drawable.running_horse3);
         horseAnimation3 = (AnimationDrawable) horseImage3.getBackground();
         horseAnimation3.start();
-
-
-
-        final int totalBet = bet1 + bet2 + bet3;
-
-
-
-        if (totalBet > balance) {
-            Toast.makeText(this, "Insufficient balance!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         mediaPlayer.start();
         balance -= totalBet;
         tvBalance.setText("Balance: $" + balance);
