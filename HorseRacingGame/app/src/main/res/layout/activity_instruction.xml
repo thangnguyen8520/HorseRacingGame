@@ -8,20 +8,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Game Instructions"
+        android:text="Instructions"
         android:textSize="24sp"
         android:textColor="@color/blue_main" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1. Recharge your balance if needed."
+        android:text="1. Enter your username and password to login."
         android:layout_marginTop="16dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2. Place your bets on one or more horses."
+        android:text="2. Place your bets on the horses."
         android:layout_marginTop="8dp" />
 
     <TextView
@@ -33,12 +33,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="4. Watch the race and see if your horse wins!"
-        android:layout_marginTop="8dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="5. Press 'Reset' to clear bets and reset the race."
+        android:text="4. Press 'Reset' to clear bets and reset the race."
         android:layout_marginTop="8dp" />
 </LinearLayout>
