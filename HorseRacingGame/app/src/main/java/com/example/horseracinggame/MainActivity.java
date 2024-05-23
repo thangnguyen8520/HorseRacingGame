@@ -138,12 +138,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
-
-
         final int totalBet = bet1 + bet2 + bet3;
-
-
 
         if (totalBet > balance) {
             Toast.makeText(this, "Insufficient balance!", Toast.LENGTH_SHORT).show();
@@ -295,6 +290,9 @@ public class MainActivity extends AppCompatActivity {
         horseImage1.setImageResource(R.drawable.horse1_1);
         horseImage2.setImageResource(R.drawable.horse2_1);
         horseImage3.setImageResource(R.drawable.horse3_1);
+        horseImage1.setImageDrawable(null);
+        horseImage2.setImageDrawable(null);
+        horseImage3.setImageDrawable(null);
         horseAnimation1.stop();
         horseAnimation2.stop();
         horseAnimation3.stop();
@@ -331,12 +329,10 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private void moveHorse(ImageView horse) {
-        // Example logic to move horse
-        horse.setX(horse.getX() + random.nextInt(10));
+        horse.setX(horse.getX() + random.nextInt(25));
     }
 
     private boolean checkIfHorseWon(ImageView horse) {
-        // Example logic to check if a horse has won
         return horse.getX() >= raceTrackLayout.getWidth() - horse.getWidth();
     }
 
