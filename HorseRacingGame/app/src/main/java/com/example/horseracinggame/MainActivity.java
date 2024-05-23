@@ -179,9 +179,9 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                int progress1 = (int) (horseImage1.getTranslationX() + random.nextInt(10));
-                int progress2 = (int) (horseImage2.getTranslationX() + random.nextInt(10));
-                int progress3 = (int) (horseImage3.getTranslationX() + random.nextInt(10));
+                int progress1 = (int) (horseImage1.getTranslationX() + random.nextInt(25));
+                int progress2 = (int) (horseImage2.getTranslationX() + random.nextInt(25));
+                int progress3 = (int) (horseImage3.getTranslationX() + random.nextInt(25));
 
                 horseImage1.setTranslationX(progress1);
                 horseImage2.setTranslationX(progress2);

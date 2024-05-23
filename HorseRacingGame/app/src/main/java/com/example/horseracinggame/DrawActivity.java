@@ -31,8 +31,10 @@ public class DrawActivity extends AppCompatActivity {
         btnBackToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainIntent = new Intent(DrawActivity.this, MainActivity.class);
-                startActivity(mainIntent);
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("balance", balance);
+                setResult(RESULT_OK, resultIntent);
+                finish();
             }
         });
     }
